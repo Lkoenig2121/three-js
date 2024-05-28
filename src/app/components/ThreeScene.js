@@ -6,10 +6,8 @@ const ThreeScene = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Create a scene
     const scene = new THREE.Scene();
 
-    // Create a camera
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -18,17 +16,14 @@ const ThreeScene = () => {
     );
     camera.position.z = 5;
 
-    // Create a renderer
     const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // Create a cube
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
-    // Mouse move event listener
     const handleMouseMove = (event) => {
       const { clientX, clientY } = event;
       const mouseX = (clientX / window.innerWidth) * 2 - 1;
@@ -36,10 +31,8 @@ const ThreeScene = () => {
       setMousePosition({ x: mouseX, y: mouseY });
     };
 
-    // Add mouse move event listener
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Animate the cube
     const animate = () => {
       requestAnimationFrame(animate);
       if (Math.abs(mousePosition.x) <= 1 && Math.abs(mousePosition.y) <= 1) {
@@ -54,7 +47,6 @@ const ThreeScene = () => {
     animate();
 
     return () => {
-      // Clean up
       window.removeEventListener("mousemove", handleMouseMove);
       renderer.dispose();
     };
